@@ -1,9 +1,10 @@
 body {
-    background-size: cover;
     color: white;
     font-family: 'Chalkboard SE', 'Comic Sans MS', cursive;
     margin: 0;
     padding: 10px; /* Padding between the top of the viewport and the top of the blackboard */
+    background-image: url('tile.jpg');
+    background-repeat: repeat;
 }
 
 a {
@@ -87,29 +88,5 @@ footer {
 @media (min-width: 900px) {
     .show-list {
         column-count: 3;
-    }
-}
-
-@media (min-width: 1400px) {
-    body {
-        background-image: url('stone-original.jpg');
-    }
-}
-
-@media (max-width: 1400px) {
-    body {
-        background-image: url('stone-large.jpg');
-    }
-}
-
-@media (max-width: 1024px) {
-    body {
-        background-image: url('stone-medium.jpg');
-    }
-}
-
-@media (max-width: 600px) {
-    body {
-        background-image: url('stone-small.jpg');
     }
 }
