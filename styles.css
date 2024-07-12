@@ -63,7 +63,13 @@ footer {
 }
 
 /* Responsive styles */
-@media (min-width: 1024px) {
+@media (min-width: 1400px) {
+    body {
+        background-image: url('stone-original.jpg');
+    }
+}
+
+@media (max-width: 1400px) {
     body {
         background-image: url('stone-large.jpg');
     }
