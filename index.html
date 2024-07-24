@@ -5,24 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edinburgh Fringe 2024: Sold Out Shows</title>
-    <meta name="description"
-        content="All the sold out shows and shows which are about to sell out at Edinburgh Fringe 2024">
+    <meta name="description" content="All the sold out shows and shows which are about to sell out at Edinburgh Fringe 2024">
     <link rel="stylesheet" href="styles.css">
-    <link rel="canonical” href=" https://fringe-sold-out.humfreybrandes.com/">
+    <link rel="canonical" href="https://fringe-sold-out.humfreybrandes.com/">
     <script src="script.js" defer></script>
     <meta name="google-site-verification" content="XOC58bzYvsGFXG5uzXp5TKLJh1r2gATGdduojvePp5o" />
     <script src="https://cdn.amplitude.com/libs/analytics-browser-2.7.4-min.js.gz"></script>
     <script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.4.1-min.js.gz"></script>
     <script src="https://cdn.amplitude.com/libs/plugin-autocapture-browser-0.9.0-min.js.gz"></script>
-    <script>window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 })).promise.then(function () { window.amplitude.add(window.amplitudeAutocapturePlugin.plugin()); window.amplitude.init('9ae900961d6628251825f5724250b654'); });</script>
+    <script>
+        window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 })).promise.then(function () {
+            window.amplitude.add(window.amplitudeAutocapturePlugin.plugin());
+            window.amplitude.init('9ae900961d6628251825f5724250b654');
+        });
+    </script>
 
-        <!-- Twitter Card meta tags -->
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Sold Out Shows at Edinburgh Fringe 2024">
-        <meta name="twitter:description" content="All the sold out shows and shows which are about to sell out at Edinburgh Fringe 2024">
-        <meta name="twitter:image" content="https://fringe-sold-out.humfreybrandes.com/twitter-card.png">
-        <meta name="twitter:site" content="@SoldOutBoard">
-        <meta name="twitter:creator" content="@SoldOutBoard">
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sold Out Shows at Edinburgh Fringe 2024">
+    <meta name="twitter:description" content="All the sold out shows and shows which are about to sell out at Edinburgh Fringe 2024">
+    <meta name="twitter:image" content="https://fringe-sold-out.humfreybrandes.com/twitter-card.png">
+    <meta name="twitter:site" content="@SoldOutBoard">
+    <meta name="twitter:creator" content="@SoldOutBoard">
 </head>
 
 <body>
@@ -32,25 +36,12 @@
             <h1 class="sold-out">SOLD OUT</h1>
         </header>
         <main>
-            <ul class="show-list">
-                
-                <li class='show-item'>Stuart Mitchell <small>– Work in Progress</small></li>
-                <li class='show-item'>Rose Matafeo: <small>On and On and On</small></li>
-                <li class='show-item'>June Carter Cash: <small>The Woman, Her Music and Me</small></li>
-                <li class="show-item">Nish Kumar: <small>Nish, Don't Kill My Vibe (Work-in-Progress)</small></li>
-                <li class='show-item'>The Bookbinder</li>
-                <li class='show-item'>The Cryptid Factor <small>with Rhys Darby, Dan Schreiber and Buttons</small></li>
-                <li class="show-item">You're Needy (sounds frustrating)</li>
-                <li class="show-item">Mark Watson: <small>Work-In-Progress Is Not a Cop-Out, It Demonstrates Respect For The Paying Audience</small></li>
-                <li class="show-item">Paul Black: <small>All Sorts</small></li>
-                <li class="show-item">Joanne McNally: <small>Work in Progress</small></li>
-
+            <ul class="show-list" id="sold-out-list">
+                <!-- Sold-out shows will be dynamically inserted here -->
             </ul>
         </main>
         <footer>
-            <p>Last updated: Wednesday, 24 July 2024<br><span style="font-size: 0.8em;"><a
-                        href="mailto:humfrey@brandes.co.uk">Email</a> - <a
-                        href="https://twitter.com/SoldOutBoard">Twitter</a></span></p>
+            <p>Last updated: <span id="last-updated">Loading...</span><br><span style="font-size: 0.8em;"><a href="mailto:humfrey@brandes.co.uk">Email</a> - <a href="https://twitter.com/SoldOutBoard">Twitter</a></span></p>
         </footer>
     </div>
 
@@ -59,32 +50,68 @@
             <h2 class="subtitle">Selling out</h2>
         </header>
         <main>
-            <ul class="show-list">
-                
-                <li class='show-item'><a href='https://tickets.edfringe.com/whats-on/mhairi-black-politics-isn-t-for-me'>Mhairi Black: Politics Isn't For Me</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/sarah-keyworth-my-eyes-are-up-here'>Sarah Keyworth: My Eyes Are Up Here</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/history-of-paper-by-oliver-emanuel-and-gareth-williams'>A History of Paper by Oliver Emanuel and Gareth Williams</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/tim-key-l-b-r-advanced-work-in-progress'>Tim Key: L****b**r* (Advanced Work-in-Progress)</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/marc-jennings-marcsism'>Marc Jennings: Marcsism</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/dara-o-briain-my-entire-life-is-a-work-in-progress-work-in-progress'>Dara Ó Briain: My Entire Life is a Work In Progress (Work in Progress)</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/100-year-old-letter'>The 100-Year-Old Letter</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/lewis-major-lien'>Lewis Major: Lien</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/vittorio-angelone-and-friends-off-the-cuff'>Vittorio Angelone and Friends: Off the Cuff</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/sara-pascoe-i-am-a-strange-gloop-wip'>Sara Pascoe: I Am A Strange Gloop (WIP)</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/alex-love-how-to-win-a-pub-quiz-returns'>Alex Love: How to Win a Pub Quiz Returns</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/shoot-from-the-hip'>Shoot From The Hip</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/larry-dean-dodger'>Larry Dean: Dodger</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/into-the-woods'>Into the Woods</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/benedict-townsend-friends-with-benedict'>Benedict Townsend: Friends With Benedict</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/glenn-moore-work-in-progress'>Glenn Moore: Work in Progress</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/james-gardner-journeyman'>James Gardner: Journeyman</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/dan-bastianelli-deception'>Dan Bastianelli: Deception</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/ania-magliano-forgive-me-father'>Ania Magliano: Forgive Me, Father</a></li>
-<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/emma-sidi-is-sue-gray'>Emma Sidi Is Sue Gray</a></li>
-
+            <ul class="show-list" id="selling-out-list">
+                <!-- Selling-out shows will be dynamically inserted here -->
             </ul>
+        </main>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const colors = ['yellow', 'pink', 'red', 'green', 'magenta', 'orange', 'cyan', 'blue'];
+
+            // Function to format date
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString(undefined, options);
+            }
+
+            // Update show lists and last updated date
+            async function updateContent() {
+                try {
+                    const soldOutUrl = 'http://209.97.129.213:3000/sold-out';
+                    const sellingOutUrl = 'http://209.97.129.213:3000/selling-out';
+                    const lastUpdatedUrl = 'http://209.97.129.213:3000/last-updated';
+
+                    const [soldOutResponse, sellingOutResponse, lastUpdatedResponse] = await Promise.all([
+                        fetch(soldOutUrl).then(res => res.json()),
+                        fetch(sellingOutUrl).then(res => res.json()),
+                        fetch(lastUpdatedUrl).then(res => res.json())
+                    ]);
+
+                    // Update Sold Out Shows
+                    const soldOutList = document.querySelector('#sold-out-list');
+                    soldOutList.innerHTML = soldOutResponse.map(show => `<li class='show-item'>${show.title}</li>`).join('');
+
+                    // Update Selling Out Shows
+                    const sellingOutList = document.querySelector('#selling-out-list');
+                    sellingOutList.innerHTML = sellingOutResponse.map(show => `<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/${show.show_slug}'>${show.title}</a></li>`).join('');
+
+                    // Update Last Updated Date
+                    const lastUpdatedDate = document.querySelector('#last-updated');
+                    lastUpdatedDate.textContent = formatDate(lastUpdatedResponse.updated);
+
+                    // Color sold-out shows
+                    const showItems = document.querySelectorAll('.sold-out-shows .show-item');
+                    showItems.forEach((item, index) => {
+                        const color = colors[index % colors.length];
+                        item.style.color = color;
+                    });
+
+                    // Set links to open in a new tab
+                    const links = document.querySelectorAll('a');
+                    links.forEach(link => {
+                        link.setAttribute('target', '_blank');
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+
+            updateContent();
+        });
+    </script>
 </body>
 
 </html>
