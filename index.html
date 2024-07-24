@@ -57,60 +57,71 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const colors = ['yellow', 'pink', 'red', 'green', 'magenta', 'orange', 'cyan', 'blue'];
+       document.addEventListener('DOMContentLoaded', () => {
+    const colors = ['yellow', 'pink', 'red', 'green', 'magenta', 'orange', 'cyan', 'blue'];
 
-            // Function to format date
-            function formatDate(dateString) {
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                return new Date(dateString).toLocaleDateString(undefined, options);
-            }
+    // Function to format date
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
 
-            // Update show lists and last updated date
-            async function updateContent() {
-                try {
-                    const soldOutUrl = 'https://fringe-api.humfreybrandes.com/sold-out';
-                    const sellingOutUrl = 'https://fringe-api.humfreybrandes.com/selling-out';
-                    const lastUpdatedUrl = 'https://fringe-api.humfreybrandes.com/last-updated';
+    // Function to get color class based on sold_out_dates_count
+    function getColorClass(count) {
+        if (count >= 10) return 'selling-out-red';
+        if (count >= 5) return 'selling-out-pink';
+        if (count >= 3) return 'selling-out-light-pink';
+        return 'selling-out-white';
+    }
 
-                    const [soldOutResponse, sellingOutResponse, lastUpdatedResponse] = await Promise.all([
-                        fetch(soldOutUrl).then(res => res.json()),
-                        fetch(sellingOutUrl).then(res => res.json()),
-                        fetch(lastUpdatedUrl).then(res => res.json())
-                    ]);
+    // Update show lists and last updated date
+    async function updateContent() {
+        try {
+            const soldOutUrl = 'https://fringe-api.humfreybrandes.com/sold-out';
+            const sellingOutUrl = 'https://fringe-api.humfreybrandes.com/selling-out';
+            const lastUpdatedUrl = 'https://fringe-api.humfreybrandes.com/last-updated';
 
-                    // Update Sold Out Shows
-                    const soldOutList = document.querySelector('#sold-out-list');
-                    soldOutList.innerHTML = soldOutResponse.map(show => `<li class='show-item'>${show.title}</li>`).join('');
+            const [soldOutResponse, sellingOutResponse, lastUpdatedResponse] = await Promise.all([
+                fetch(soldOutUrl).then(res => res.json()),
+                fetch(sellingOutUrl).then(res => res.json()),
+                fetch(lastUpdatedUrl).then(res => res.json())
+            ]);
 
-                    // Update Selling Out Shows
-                    const sellingOutList = document.querySelector('#selling-out-list');
-                    sellingOutList.innerHTML = sellingOutResponse.map(show => `<li class='show-item'><a href='https://tickets.edfringe.com/whats-on/${show.show_slug}'>${show.title}</a></li>`).join('');
+            // Update Sold Out Shows
+            const soldOutList = document.querySelector('#sold-out-list');
+            soldOutList.innerHTML = soldOutResponse.map((show, index) => {
+                const color = colors[index % colors.length];
+                return `<li class='show-item' style='color: ${color};'>${show.title}</li>`;
+            }).join('');
 
-                    // Update Last Updated Date
-                    const lastUpdatedDate = document.querySelector('#last-updated');
-                    lastUpdatedDate.textContent = formatDate(lastUpdatedResponse.updated);
+            // Update Selling Out Shows
+            const sellingOutList = document.querySelector('#selling-out-list');
+            sellingOutList.innerHTML = sellingOutResponse.map(show => `
+                <li class='show-item ${getColorClass(show.sold_out_dates_count)}'>
+                    <a href='https://tickets.edfringe.com/whats-on/${show.show_slug}'>${show.title}</a>
+                </li>
+            `).join('');
 
-                    // Color sold-out shows
-                    const showItems = document.querySelectorAll('.sold-out-shows .show-item');
-                    showItems.forEach((item, index) => {
-                        const color = colors[index % colors.length];
-                        item.style.color = color;
-                    });
+            // Update Last Updated Date
+            const lastUpdatedDate = document.querySelector('#last-updated');
+            lastUpdatedDate.textContent = formatDate(lastUpdatedResponse.updated);
 
-                    // Set links to open in a new tab
-                    const links = document.querySelectorAll('a');
-                    links.forEach(link => {
-                        link.setAttribute('target', '_blank');
-                    });
+            // Set links to open in a new tab
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+                link.setAttribute('target', '_blank');
+            });
 
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                }
-            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
-            updateContent();
-        });
+    updateContent();
+});
+
+
+
     </script>
 </body>
 

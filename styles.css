@@ -90,3 +90,20 @@ footer {
         column-count: 3;
     }
 }
+
+.selling-out-red a {
+    color: rgb(255, 35, 72);
+}
+
+.selling-out-pink a {
+    color: rgb(255, 110, 135);
+}
+
+.selling-out-light-pink a {
+    color: lightpink;
+}
+
+.selling-out-white a {
+    color: white;
+}
+
