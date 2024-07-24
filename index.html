@@ -34,6 +34,7 @@
         <header>
             <h2 class="subtitle">Edinburgh Fringe 2024</h2>
             <h1 class="sold-out">SOLD OUT</h1>
+            <div style="font-size: 0.8em;"><a href="#" id="jump-to-selling-out">Jump to ‘Selling Out’</a></div>
         </header>
         <main>
             <ul class="show-list" id="sold-out-list">
@@ -98,7 +99,7 @@
             const sellingOutList = document.querySelector('#selling-out-list');
             sellingOutList.innerHTML = sellingOutResponse.map(show => `
                 <li class='show-item ${getColorClass(show.sold_out_dates_count)}'>
-                    <a href='https://tickets.edfringe.com/whats-on/${show.show_slug}'>${show.title}</a>
+                    <a href='https://tickets.edfringe.com/whats-on/${show.show_slug}' target="_blank">${show.title}</a>
                 </li>
             `).join('');
 
@@ -106,16 +107,18 @@
             const lastUpdatedDate = document.querySelector('#last-updated');
             lastUpdatedDate.textContent = formatDate(lastUpdatedResponse.updated);
 
-            // Set links to open in a new tab
-            const links = document.querySelectorAll('a');
-            links.forEach(link => {
-                link.setAttribute('target', '_blank');
-            });
-
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
+
+    const jumpToSellingOutLink = document.querySelector('#jump-to-selling-out');
+    const sellingOutSection = document.querySelector('.selling-out-shows');
+
+    jumpToSellingOutLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        sellingOutSection.scrollIntoView({ behavior: 'smooth' });
+    });
 
     updateContent();
 });
