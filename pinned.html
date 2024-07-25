@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinned Shows Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .slug-list {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .slug-list li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .slug-list li:hover {
+            background-color: #f1f1f1;
+        }
+        .slug-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .slug-info .slug-title {
+            flex: 1;
+            text-align: left;
+            font-weight: bold;
+        }
+        .slug-info .slug-count {
+            flex: 0;
+            text-align: right;
+            padding-left: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .remove-button {
+    background-color: #f9f9f9;
+    color: #ddd;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+        .remove-button:hover {
+            background-color: #d32f2f;
+        }
+        .input-container {
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pinned Shows Tracker</h1>
+        <ul id="slug-list" class="slug-list"></ul>
+        
+    </div>
+    <div class="container">
+    <div class="input-container">
+        <textarea id="slug-input" placeholder="Enter slugs, separated by commas"></textarea>
+        <button onclick="saveSlugs()">Save Slugs</button>
+    </div>
+</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSlugs();
+        });
+
+        async function loadSlugs() {
+            const slugs = getSlugsFromCookies();
+            const apiData = await fetch('https://fringe-api.humfreybrandes.com/selling-out').then(response => response.json());
+
+            const slugCounts = slugs.map(slug => {
+                const show = apiData.find(show => show.show_slug === slug);
+                return {
+                    slug,
+                    count: show ? parseInt(show.sold_out_dates_count, 10) : 0
+                };
+            }).filter(({count}) => count >= 0);
+
+            slugCounts.sort((a, b) => b.count - a.count);
+            slugCounts.sort((a, b) => b.count - a.count || a.slug.localeCompare(b.slug));
+
+
+            const slugList = document.getElementById('slug-list');
+            slugList.innerHTML = '';
+            slugCounts.forEach(({slug, count}) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="slug-info" style="color: ${getColorCode(count)};">
+                        <div class="slug-title">${slug}</div>
+                        <div class="slug-count">${count}</div>
+                        <button class="remove-button" onclick="removeSlug('${slug}')">X</button>
+                    </div>
+                `;
+                slugList.appendChild(li);
+            });
+        }
+
+        function getColorCode(count) {
+            if (count >= 10) return 'red';
+            if (count >= 5) return 'maroon';
+            if (count >= 3) return 'black';
+            if (count >= 1) return 'gray';
+            return '#ccc';
+        }
+
+        function saveSlugs() {
+            const input = document.getElementById('slug-input').value;
+            const slugs = input.split(',').map(slug => slug.trim()).filter(slug => slug);
+            const existingSlugs = getSlugsFromCookies();
+            const allSlugs = [...new Set([...existingSlugs, ...slugs])];
+
+            document.cookie = `slugs=${JSON.stringify(allSlugs)}; path=/`;
+            loadSlugs();
+        }
+
+        function removeSlug(slugToRemove) {
+            const slugs = getSlugsFromCookies().filter(slug => slug !== slugToRemove);
+            document.cookie = `slugs=${JSON.stringify(slugs)}; path=/`;
+            loadSlugs();
+        }
+
+        function getSlugsFromCookies() {
+            const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+            const slugsCookie = cookies.find(cookie => cookie.startsWith('slugs='));
+            if (slugsCookie) {
+                return JSON.parse(slugsCookie.split('=')[1]);
+            }
+            return [];
+        }
+    </script>
+</body>
+</html>
