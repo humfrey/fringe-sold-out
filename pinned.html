@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
+
         .container {
             max-width: 600px;
             margin: 20px auto;
@@ -21,16 +23,19 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #4CAF50;
             margin-bottom: 20px;
         }
+
         .slug-list {
             list-style-type: none;
             padding: 0;
             margin-bottom: 20px;
         }
+
         .slug-list li {
             padding: 10px;
             margin-bottom: 10px;
@@ -42,20 +47,24 @@
             align-items: center;
             transition: background-color 0.3s;
         }
+
         .slug-list li:hover {
             background-color: #f1f1f1;
         }
+
         .slug-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
+
         .slug-info .slug-title {
             flex: 1;
             text-align: left;
             font-weight: bold;
         }
+
         .slug-info .slug-count {
             flex: 0;
             text-align: right;
@@ -63,28 +72,31 @@
             font-size: 1.2em;
             font-weight: bold;
         }
+
         .remove-button {
-    background-color: #f9f9f9;
-    color: #ddd;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    margin-left: 10px;
-    transition: background-color 0.3s;
-}
+            background-color: #f9f9f9;
+            color: #ddd;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
 
         .remove-button:hover {
             background-color: #d32f2f;
         }
+
         .input-container {
             margin-top: 20px;
         }
+
         textarea {
             width: 100%;
             padding: 10px;
@@ -94,6 +106,7 @@
             font-size: 16px;
             margin-bottom: 10px;
         }
+
         button {
             display: block;
             width: 100%;
@@ -106,23 +119,25 @@
             font-size: 16px;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #45a049;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Pinned Shows Tracker</h1>
         <ul id="slug-list" class="slug-list"></ul>
-        
+
     </div>
     <div class="container">
-    <div class="input-container">
-        <textarea id="slug-input" placeholder="Enter slugs, separated by commas"></textarea>
-        <button onclick="saveSlugs()">Save Slugs</button>
+        <div class="input-container">
+            <textarea id="slug-input" placeholder="Enter slugs, separated by commas"></textarea>
+            <button onclick="saveSlugs()">Save Slugs</button>
+        </div>
     </div>
-</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -139,7 +154,7 @@
                     slug,
                     count: show ? parseInt(show.sold_out_dates_count, 10) : 0
                 };
-            }).filter(({count}) => count >= 0);
+            }).filter(({ count }) => count >= 0);
 
             slugCounts.sort((a, b) => b.count - a.count);
             slugCounts.sort((a, b) => b.count - a.count || a.slug.localeCompare(b.slug));
@@ -147,7 +162,7 @@
 
             const slugList = document.getElementById('slug-list');
             slugList.innerHTML = '';
-            slugCounts.forEach(({slug, count}) => {
+            slugCounts.forEach(({ slug, count }) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <div class="slug-info" style="color: ${getColorCode(count)};">
@@ -189,9 +204,37 @@
             const slugsCookie = cookies.find(cookie => cookie.startsWith('slugs='));
             if (slugsCookie) {
                 return JSON.parse(slugsCookie.split('=')[1]);
+            } else {
+                return [
+                    "sarah-keyworth-my-eyes-are-up-here",
+                    "emma-sidi-is-sue-gray",
+                    "ania-magliano-forgive-me-father",
+                    "every-brilliant-thing",
+                    "gwyneth-goes-skiing",
+                    "little-deaths",
+                    "rachel-kaly-hospital-hour",
+                    "letter-to-lyndon-b-johnson-or-god-whoever-reads-this-first",
+                    "kaye-hole-hosted-by-reuben-kaye",
+                    "arcade",
+                    "natalie-palamides-weer",
+                    "patti-harrison-my-huge-tits-huge-because-they-are-infected-not-fake",
+                    "instructions",
+                    "alex-kealy-the-fear",
+                    "playfight",
+                    "nation",
+                    "bellringers",
+                    "ahir-shah-ends",
+                    "catherine-cohen-come-for-me",
+                    "carousel",
+                    "sheeps-the-giggle-bunch-that-s-our-name-for-you",
+                    "lorna-rose-treen-skin-pigeon",
+                    "why-i-stuck-a-flare-up-my-arse-for-england",
+                    "really-good-exposure"
+                ];
+
             }
-            return [];
         }
     </script>
 </body>
+
 </html>
