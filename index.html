@@ -72,7 +72,8 @@
         if (count >= 10) return 'selling-out-red';
         if (count >= 5) return 'selling-out-pink';
         if (count >= 3) return 'selling-out-light-pink';
-        return 'selling-out-white';
+        if (count >= 2) return 'selling-out-white';
+        return 'selling-out-hidden';
     }
 
     // Update show lists and last updated date
