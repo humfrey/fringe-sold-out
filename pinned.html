@@ -151,7 +151,7 @@
 
         async function loadSlugs() {
             const slugs = getSlugsFromCookies();
-            const apiData = await fetch('https://fringe-api.humfreybrandes.com/selling-out').then(response => response.json());
+            const apiData = await fetch(`https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`).then(response => response.json());
 
             const slugCounts = slugs.map(slug => {
                 const show = apiData.find(show => show.show_slug === slug);

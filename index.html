@@ -88,9 +88,9 @@
     // Update show lists and last updated date
     async function updateContent() {
         try {
-            const soldOutUrl = 'https://fringe-api.humfreybrandes.com/sold-out';
-            const sellingOutUrl = 'https://fringe-api.humfreybrandes.com/selling-out';
-            const lastUpdatedUrl = 'https://fringe-api.humfreybrandes.com/last-updated';
+            const soldOutUrl = `https://fringe-api.humfreybrandes.com/sold-out?${Date.now()}`;
+            const sellingOutUrl = `https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`;
+            const lastUpdatedUrl = `https://fringe-api.humfreybrandes.com/last-updated?${Date.now()}`;
 
             const [soldOutResponse, sellingOutResponse, lastUpdatedResponse] = await Promise.all([
                 fetch(soldOutUrl).then(res => res.json()),
