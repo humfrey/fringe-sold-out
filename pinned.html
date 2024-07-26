@@ -30,7 +30,7 @@
             margin-bottom: 20px;
         }
 
-        h3 {
+        h4 {
             text-align: center;
             color: #000;
         }
@@ -81,6 +81,7 @@
             padding-left: 20px;
             font-size: 1.2em;
             font-weight: bold;
+            white-space: nowrap;
         }
 
         .remove-button {
@@ -115,6 +116,7 @@
             box-sizing: border-box;
             font-size: 16px;
             margin-bottom: 10px;
+            height: 90px;
         }
 
         button {
@@ -139,14 +141,13 @@
 <body>
     <div class="container">
         <h1>Sold Out Tracker - Selected Shows</h1>
-        <h3><a href="https://fringe-sold-out.humfreybrandes.com">View all shows</a></h3>
+        <h4 style="color: gray;">Updates daily — <a style="color: gray;" href="https://fringe-sold-out.humfreybrandes.com">View all shows</a></h4>
         <ul id="slug-list" class="slug-list"></ul>
-
     </div>
     <div class="container">
         <div class="input-container">
-            <textarea id="slug-input" placeholder="Enter slugs, separated by commas"></textarea>
-            <button onclick="saveSlugs()">Save Slugs</button>
+            <textarea id="slug-input" placeholder="Add your own shows (saved to your device only). Paste the slug from the show URL on EdFringe.com here, e.g. every-brilliant-thing"></textarea>
+            <button onclick="saveSlugs()">Add Show</button>
         </div>
     </div>
 
@@ -181,32 +182,37 @@
                     "sheeps-the-giggle-bunch-that-s-our-name-for-you",
                     "lorna-rose-treen-skin-pigeon",
                     "why-i-stuck-a-flare-up-my-arse-for-england",
-                    "really-good-exposure"
+                    "really-good-exposure",
+                    "tim-key-l-b-r-advanced-work-in-progress"
                 ]);
             slugs = [...new Set(slugs)];
-            const apiData = await fetch(`https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`).then(response => response.json());
 
+            const sellingOutApiData = await fetch(`https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`).then(response => response.json());
+            const soldOutApiData = await fetch('https://fringe-api.humfreybrandes.com/sold-out').then(response => response.json());
+
+            const soldOutShows = soldOutApiData.map(show => show.show_slug);
             const slugCounts = slugs.map(slug => {
-                const show = apiData.find(show => show.show_slug === slug);
+                const show = sellingOutApiData.find(show => show.show_slug === slug);
                 return {
                     slug,
-                    count: show ? parseInt(show.sold_out_dates_count, 10) : 0
+                    count: soldOutShows.includes(slug) ? 'Sold Out' : (show ? parseInt(show.sold_out_dates_count, 10) : 0)
                 };
-            }).filter(({ count }) => count >= 0);
+            }).filter(({ count }) => count === 'Sold Out' || count >= 0);
 
-            slugCounts.sort((a, b) => b.count - a.count);
-            slugCounts.sort((a, b) => b.count - a.count || a.slug.localeCompare(b.slug));
-
+            slugCounts.sort((a, b) => {
+                if (a.count === 'Sold Out' && b.count !== 'Sold Out') return -1;
+                if (b.count === 'Sold Out' && a.count !== 'Sold Out') return 1;
+                return b.count - a.count || a.slug.localeCompare(b.slug);
+            });
 
             const slugList = document.getElementById('slug-list');
             slugList.innerHTML = '';
             slugCounts.forEach(({ slug, count }) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <div class="slug-info" style="color: ${getColorCode(count)};">
+                    <div class="slug-info" style="color: ${count === 'Sold Out' ? 'dusky pink' : getColorCode(count)};">
                         <div class="slug-title"><a href="https://tickets.edfringe.com/whats-on/${slug}" target="_blank">${slug}</a></div>
                         <div class="slug-count">${count}</div>
-                        <button class="remove-button" onclick="removeSlug('${slug}')">X</button>
                     </div>
                 `;
                 slugList.appendChild(li);
