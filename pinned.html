@@ -191,7 +191,7 @@
             slugs = [...new Set(slugs)];
 
             const sellingOutApiData = await fetch(`https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`).then(response => response.json());
-            const soldOutApiData = await fetch('https://fringe-api.humfreybrandes.com/sold-out').then(response => response.json());
+            const soldOutApiData = await fetch(`https://fringe-api.humfreybrandes.com/sold-out?${Date.now()}`).then(response => response.json());
 
             const soldOutShows = soldOutApiData.map(show => show.show_slug);
             const slugCounts = slugs.map(slug => {
