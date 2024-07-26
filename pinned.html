@@ -150,7 +150,34 @@
         });
 
         async function loadSlugs() {
-            const slugs = getSlugsFromCookies();
+            let slugs = getSlugsFromCookies();
+            slugs.push(...[
+                    "sarah-keyworth-my-eyes-are-up-here",
+                    "emma-sidi-is-sue-gray",
+                    "ania-magliano-forgive-me-father",
+                    "every-brilliant-thing",
+                    "gwyneth-goes-skiing",
+                    "little-deaths",
+                    "rachel-kaly-hospital-hour",
+                    "letter-to-lyndon-b-johnson-or-god-whoever-reads-this-first",
+                    "kaye-hole-hosted-by-reuben-kaye",
+                    "arcade",
+                    "natalie-palamides-weer",
+                    "patti-harrison-my-huge-tits-huge-because-they-are-infected-not-fake",
+                    "instructions",
+                    "alex-kealy-the-fear",
+                    "playfight",
+                    "nation",
+                    "bellringers",
+                    "ahir-shah-ends",
+                    "catherine-cohen-come-for-me",
+                    "carousel",
+                    "sheeps-the-giggle-bunch-that-s-our-name-for-you",
+                    "lorna-rose-treen-skin-pigeon",
+                    "why-i-stuck-a-flare-up-my-arse-for-england",
+                    "really-good-exposure"
+                ]);
+            slugs = [...new Set(slugs)];
             const apiData = await fetch(`https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`).then(response => response.json());
 
             const slugCounts = slugs.map(slug => {
@@ -210,33 +237,7 @@
             if (slugsCookie) {
                 return JSON.parse(slugsCookie.split('=')[1]);
             } else {
-                return [
-                    "sarah-keyworth-my-eyes-are-up-here",
-                    "emma-sidi-is-sue-gray",
-                    "ania-magliano-forgive-me-father",
-                    "every-brilliant-thing",
-                    "gwyneth-goes-skiing",
-                    "little-deaths",
-                    "rachel-kaly-hospital-hour",
-                    "letter-to-lyndon-b-johnson-or-god-whoever-reads-this-first",
-                    "kaye-hole-hosted-by-reuben-kaye",
-                    "arcade",
-                    "natalie-palamides-weer",
-                    "patti-harrison-my-huge-tits-huge-because-they-are-infected-not-fake",
-                    "instructions",
-                    "alex-kealy-the-fear",
-                    "playfight",
-                    "nation",
-                    "bellringers",
-                    "ahir-shah-ends",
-                    "catherine-cohen-come-for-me",
-                    "carousel",
-                    "sheeps-the-giggle-bunch-that-s-our-name-for-you",
-                    "lorna-rose-treen-skin-pigeon",
-                    "why-i-stuck-a-flare-up-my-arse-for-england",
-                    "really-good-exposure"
-                ];
-
+                return [];
             }
         }
     </script>
