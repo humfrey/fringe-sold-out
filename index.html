@@ -19,16 +19,16 @@
             window.amplitude.init('9ae900961d6628251825f5724250b654');
         });
     </script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16653722935">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-16653722935');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16653722935"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'AW-16653722935');
+    </script>
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Sold Out Shows at Edinburgh Fringe 2024">
@@ -43,7 +43,6 @@
         <header>
             <h2 class="subtitle">Edinburgh Fringe 2024</h2>
             <h1 class="sold-out">SOLD OUT</h1>
-            <div style="font-size: 0.8em;"><a href="#" id="jump-to-selling-out">Jump to ‘Selling Out’</a></div>
         </header>
         <main>
             <ul class="show-list" id="sold-out-list">
@@ -66,75 +65,88 @@
         </main>
     </div>
 
+    <!-- Floating Action Button for Selling Out -->
+    <button id="fab-selling-out" class="fab">Selling&nbsp;Out</button>
+
     <script>
-       document.addEventListener('DOMContentLoaded', () => {
-    const colors = ['yellow', 'pink', 'red', 'green', 'magenta', 'orange', 'cyan', 'blue'];
+        document.addEventListener('DOMContentLoaded', () => {
+            const colors = ['yellow', 'pink', 'red', 'green', 'magenta', 'orange', 'cyan', 'blue'];
 
-    // Function to format date
-    function formatDate(dateString) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString(undefined, options);
-    }
+            // Function to format date
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString(undefined, options);
+            }
 
-    // Function to get color class based on sold_out_dates_count
-    function getColorClass(count) {
-        if (count >= 10) return 'selling-out-red';
-        if (count >= 5) return 'selling-out-pink';
-        if (count >= 3) return 'selling-out-light-pink';
-        if (count >= 2) return 'selling-out-white';
-        return 'selling-out-hidden';
-    }
+            // Function to get color class based on sold_out_dates_count
+            function getColorClass(count) {
+                if (count >= 10) return 'selling-out-red';
+                if (count >= 5) return 'selling-out-pink';
+                if (count >= 3) return 'selling-out-light-pink';
+                if (count >= 2) return 'selling-out-white';
+                return 'selling-out-hidden';
+            }
 
-    // Update show lists and last updated date
-    async function updateContent() {
-        try {
-            const soldOutUrl = `https://fringe-api.humfreybrandes.com/sold-out?${Date.now()}`;
-            const sellingOutUrl = `https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`;
-            const lastUpdatedUrl = `https://fringe-api.humfreybrandes.com/last-updated?${Date.now()}`;
+            // Update show lists and last updated date
+            async function updateContent() {
+                try {
+                    const soldOutUrl = `https://fringe-api.humfreybrandes.com/sold-out?${Date.now()}`;
+                    const sellingOutUrl = `https://fringe-api.humfreybrandes.com/selling-out?${Date.now()}`;
+                    const lastUpdatedUrl = `https://fringe-api.humfreybrandes.com/last-updated?${Date.now()}`;
 
-            const [soldOutResponse, sellingOutResponse, lastUpdatedResponse] = await Promise.all([
-                fetch(soldOutUrl).then(res => res.json()),
-                fetch(sellingOutUrl).then(res => res.json()),
-                fetch(lastUpdatedUrl).then(res => res.json())
-            ]);
+                    const [soldOutResponse, sellingOutResponse, lastUpdatedResponse] = await Promise.all([
+                        fetch(soldOutUrl).then(res => res.json()),
+                        fetch(sellingOutUrl).then(res => res.json()),
+                        fetch(lastUpdatedUrl).then(res => res.json())
+                    ]);
 
-            // Update Sold Out Shows
-            const soldOutList = document.querySelector('#sold-out-list');
-            soldOutList.innerHTML = soldOutResponse.map((show, index) => {
-                const color = colors[index % colors.length];
-                return `<li class='show-item' style='color: ${color};'>${show.title}</li>`;
-            }).join('');
+                    // Update Sold Out Shows
+                    const soldOutList = document.querySelector('#sold-out-list');
+                    soldOutList.innerHTML = soldOutResponse.map((show, index) => {
+                        const color = colors[index % colors.length];
+                        return `<li class='show-item' style='color: ${color};'>${show.title}</li>`;
+                    }).join('');
 
-            // Update Selling Out Shows
-            const sellingOutList = document.querySelector('#selling-out-list');
-            sellingOutList.innerHTML = sellingOutResponse.map(show => `
-                <li class='show-item ${getColorClass(show.sold_out_dates_count)}'>
-                    <a href='https://tickets.edfringe.com/whats-on/${show.show_slug}' target="_blank">${show.title}</a>
-                </li>
-            `).join('');
+                    // Update Selling Out Shows
+                    const sellingOutList = document.querySelector('#selling-out-list');
+                    sellingOutList.innerHTML = sellingOutResponse.map(show => `
+                        <li class='show-item ${getColorClass(show.sold_out_dates_count)}'>
+                            <a href='https://tickets.edfringe.com/whats-on/${show.show_slug}' target="_blank">${show.title}</a>
+                        </li>
+                    `).join('');
 
-            // Update Last Updated Date
-            const lastUpdatedDate = document.querySelector('#last-updated');
-            lastUpdatedDate.textContent = formatDate(lastUpdatedResponse.updated);
+                    // Update Last Updated Date
+                    const lastUpdatedDate = document.querySelector('#last-updated');
+                    lastUpdatedDate.textContent = formatDate(lastUpdatedResponse.updated);
 
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
 
-    const jumpToSellingOutLink = document.querySelector('#jump-to-selling-out');
-    const sellingOutSection = document.querySelector('.selling-out-shows');
+            const jumpToSellingOutLink = document.querySelector('#jump-to-selling-out');
+            const sellingOutSection = document.querySelector('.selling-out-shows');
 
-    jumpToSellingOutLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        sellingOutSection.scrollIntoView({ behavior: 'smooth' });
-    });
+            // FAB visibility logic
+            const fabSellingOut = document.getElementById('fab-selling-out');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        fabSellingOut.style.display = 'none';
+                    } else {
+                        fabSellingOut.style.display = 'block';
+                    }
+                });
+            }, { threshold: 0 });
 
-    updateContent();
-});
+            observer.observe(sellingOutSection);
 
+            fabSellingOut.addEventListener('click', () => {
+                sellingOutSection.scrollIntoView({ behavior: 'smooth' });
+            });
 
-
+            updateContent();
+        });
     </script>
 </body>
 
