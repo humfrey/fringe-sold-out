@@ -40,11 +40,12 @@
 
 <body>
     <div class="container sold-out-shows">
-        <header>
+        <main>
+            <header>
             <h2 class="subtitle">Edinburgh Fringe 2024</h2>
             <h1 class="sold-out">SOLD OUT</h1>
         </header>
-        <main>
+        
             <ul class="show-list" id="sold-out-list">
                 <!-- Sold-out shows will be dynamically inserted here -->
             </ul>
@@ -104,7 +105,11 @@
                     const soldOutList = document.querySelector('#sold-out-list');
                     soldOutList.innerHTML = soldOutResponse.map((show, index) => {
                         const color = colors[index % colors.length];
-                        return `<li class='show-item' style='color: ${color};'>${show.title}</li>`;
+                        
+                        const showDatetime = new Date(show.datetime).getTime();
+                        (showDatetime > Date.now() - 2 * 24 * 3600 * 1000) ? newLozenge = `<span class="newLozenge">NEW</span>` : newLozenge = ''
+                        
+                        return `<li class='show-item' style='color: ${color};'>${show.title}${newLozenge}</li>`;
                     }).join('');
 
                     // Update Selling Out Shows
