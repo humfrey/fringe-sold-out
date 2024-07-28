@@ -59,6 +59,7 @@ header {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px; /* Space between items */
+    break-inside: avoid;
 }
 
 .show-item a {
