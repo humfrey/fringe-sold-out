@@ -199,7 +199,7 @@
                 const show = sellingOutApiData.find(show => show.show_slug === slug);
                 return {
                     slug,
-                    count: soldOutShows.includes(slug) ? 'Sold Out' : (show ? parseInt(show.sold_out_dates_count, 10) : 0)
+                    count: soldOutShows.includes(slug) ? 'Sold Out' : (show ? show.sold_out_dates_count : 0)
                 };
             }).filter(({ count }) => count === 'Sold Out' || count >= 0);
 
@@ -216,7 +216,7 @@
                 li.innerHTML = `
                     <div class="slug-info" style="color: ${count === 'Sold Out' ? 'dusky pink' : getColorCode(count)};">
                         <div class="slug-title"><a href="https://tickets.edfringe.com/whats-on/${slug}" target="_blank">${slug}</a></div>
-                        <div class="slug-count">${count}</div>
+                        <div class="slug-count">${count == "Sold Out" ? "Sold Out" : Number(count).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:0})}</div>
                     </div>
                 `;
                 slugList.appendChild(li);
@@ -224,10 +224,8 @@
         }
 
         function getColorCode(count) {
-            if (count >= 10) return 'red';
-            if (count >= 5) return 'maroon';
-            if (count >= 3) return 'black';
-            if (count >= 1) return 'gray';
+            if (count >= 0.3) return 'red';
+            if (count > 0) return 'maroon';
             return '#ccc';
         }
 
