@@ -491,10 +491,10 @@
 
             // Function to get color class based on sold_out_dates_count
             function getColorClass(count) {
-                if (count >= 10) return 'selling-out-red';
-                if (count >= 5) return 'selling-out-pink';
-                if (count >= 3) return 'selling-out-light-pink';
-                if (count >= 2) return 'selling-out-white';
+                if (count >= 0.7) return 'selling-out-red';
+                if (count >= 0.5) return 'selling-out-pink';
+                if (count >= 0.2) return 'selling-out-light-pink';
+                if (count >= 0.1) return 'selling-out-white';
                 return 'selling-out-hidden';
             }
 
